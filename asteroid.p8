@@ -10,7 +10,6 @@ pmaxspeed = 3
 psize = 4
 rotspeed=0.02
 paccel, pdecel = 0.05, 0.03
-paccelangle = 0 
 -- world
 score, life = 0, 3
 
@@ -18,6 +17,7 @@ score, life = 0, 3
 px, py = 64, 64
 pvx, pvy = 0,0
 pangle = 0.0
+paccelangle = 0 
 
 -- player triangle geom
 pgeom={
@@ -72,14 +72,18 @@ end
 
 -- update player vel/rot/pos/...
 function update_player()
-	pvx -= pdecel
-	pvy -= pdecel
-	if (pvx < 0) then pvx = 0 end
-	if (pvy < 0) then pvy = 0 end
+	-- decelerate
+ pvx *= 0.99
+ pvy *= 0.99
+ -- cap max speed
+	if (pvx < -pmaxspeed) then pvx = -pmaxspeed end
+	if (pvy < -pmaxspeed) then pvy = -pmaxspeed end
 	if (pvx > pmaxspeed) then pvx = pmaxspeed end
 	if (pvy > pmaxspeed) then pvy = pmaxspeed end
-	px += pvx * cos(paccelangle+0.25)
-	py += pvy * sin(paccelangle+0.25)
+	-- move
+	px += pvx
+	py += pvy
+	-- infinite screen
 	if(px>127) then px -= 127 end
 	if(py>128) then py -= 127 end
 	if(px<0) then px += 127 end
@@ -108,8 +112,8 @@ end
 
 function accel()
  paccelangle = pangle
- pvx += paccel
- pvy += paccel
+ pvx = pvx + paccel * cos(paccelangle+0.25)
+ pvy = pvy + paccel * sin(paccelangle+0.25) 
 -- px += pvx * cos(pangle+0.25)
 -- py += pvy * sin(pangle+0.25)
  debug="accel "..pvx.."/"..pvy
