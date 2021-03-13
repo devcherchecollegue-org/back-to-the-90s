@@ -1,27 +1,37 @@
 pico-8 cartridge // http://www.pico-8.com
 version 32
 __lua__
+-- non gameplay stuff
 isdebug=1
+debug = ""
+
+-- const
+pmaxspeed = 3
+psize = 4
+rotspeed=0.02
+paccel, pdecel = 0.05, 0.03
+
+-- world
+score, life = 0, 3
+
+-- player position, velocity, angle
 px, py = 64, 64
 pvx, pvy = 0,0
-paccel= 0.05
-pdecel = 0.03
 pangle = 0.0
-pmaxspeed = 3
+
+-- player triangle geom
 pgeom={
 {{0,-1},{-1,1}},
 {{-1,1},{1,1}},
 {{1,1},{0,-1}}
 }
-psize = 4
-score, life = 0, 3
-debug = ""
-rotspeed=0.02
 
+-- called only once
 function _init()
 	cls()
 end
 
+-- called every time
 function _update()
 	cls()
  -- player collision
@@ -35,11 +45,13 @@ function _update()
 	update_player()
 end
 
+-- called at 30fps
 function _draw()
 	draw_player()
 	draw_text()
 end
 
+-- draw the player, duh.
 function draw_player()
 	--hitbox
 	rect(px-psize,py-psize,
@@ -56,6 +68,7 @@ function draw_player()
 	end
 end
 
+-- update player vel/rot/pos/...
 function update_player()
 	pvx -= pdecel
 	pvy -= pdecel
@@ -65,20 +78,12 @@ function update_player()
 	if (pvy > pmaxspeed) then pvy = pmaxspeed end
 	px += pvx * cos(pangle+0.25)
 	py += pvy * sin(pangle+0.25)
-	if(px>127) then
-		px -= 127
-	end
-	if(py>128) then
-	 py -= 127
-	end
-	if(px<0) then
-		px += 127
-	end
-	if(py<0) then
-	 py += 127
-	end
-	
+	if(px>127) then px -= 127 end
+	if(py>128) then py -= 127 end
+	if(px<0) then px += 127 end
+	if(py<0) then py += 127 end	
 end
+
 
 function draw_text()
 	print("score: "..score, 3,5)
