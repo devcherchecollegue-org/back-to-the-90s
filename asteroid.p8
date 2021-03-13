@@ -28,6 +28,12 @@ pgeom={
 {{0.9,1},{0,-1}}
 }
 
+-- asteroid table 
+-- {x,y,vel_x,vel_y}
+roid = {}
+roid_max = 10 -- max nb of roid
+roid_nb = 0
+
 -- called only once
 function _init()
 	cls()
@@ -46,21 +52,15 @@ function _update()
 	if(btnp(❎)) then fire() end
 	update_player()
 
-	
-	-- spawn asteroid
---	local x = rnd(110) + 10
---	local y = rnd(110) + 10
---	while((abs(x-px) < 30) and (abs(y-py) < 30)) do
---		x = rnd(110) + 10
---		y = rnd(110) + 10
---	end
---	draw_asteroid(x,y,3)
+ if(roid_nb < 10) then
+ 	spawn_asteroid()
+ end	
 end
 
 -- called at 30fps
 function _draw()
 	draw_player()
-	--draw_asteroid()
+	draw_asteroid()
 	draw_text()
 end
 
@@ -83,9 +83,11 @@ function draw_player()
 	-- thruster ?
 end
 
-function draw_asteroid(x,y,r)
+function draw_asteroid()
  -- shitty placeholder
- circfill(x,y,r,8)
+ for r in all(roid) do
+ 	circfill(r[1],r[2],2,8)
+ end
 end
 
 function draw_text()
@@ -142,6 +144,17 @@ end
 function fire()
  debug="fire"
  sfx(0)
+end
+
+function spawn_asteroid()
+	local x = rnd(110) + 10
+	local y = rnd(110) + 10
+	while((abs(x-px) < 30) and (abs(y-py) < 30)) do
+		x = rnd(110) + 10
+		y = rnd(110) + 10
+	end
+	add(roid, {x,y,0,0})
+	roid_nb += 1
 end
 
 __gfx__
