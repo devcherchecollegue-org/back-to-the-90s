@@ -63,8 +63,21 @@ function update_player()
 	if (pvy < 0) then pvy = 0 end
 	if (pvx > pmaxspeed) then pvx = pmaxspeed end
 	if (pvy > pmaxspeed) then pvy = pmaxspeed end
- px += pvx * cos(pangle+0.25)
- py += pvy * sin(pangle+0.25)
+	px += pvx * cos(pangle+0.25)
+	py += pvy * sin(pangle+0.25)
+	if(px>127) then
+		px -= 127
+	end
+	if(py>128) then
+	 py -= 127
+	end
+	if(px<0) then
+		px += 127
+	end
+	if(py<0) then
+	 py += 127
+	end
+	
 end
 
 function draw_text()
@@ -88,6 +101,8 @@ end
 function accel()
  pvx += paccel
  pvy += paccel
+-- px += pvx * cos(pangle+0.25)
+-- py += pvy * sin(pangle+0.25)
  debug="accel "..pvx.."/"..pvy
 end
 
