@@ -1,6 +1,8 @@
 pico-8 cartridge // http://www.pico-8.com
 version 32
 __lua__
+-- main tab
+
 -- non gameplay stuff
 isdebug=1 -- 1 to enable
 debug = ""
@@ -61,6 +63,11 @@ function _draw()
 	draw_text()
 end
 
+
+
+-->8
+--draw stuff
+
 function draw_player()
 	--spaceship
 	for p in all(pgeom) do
@@ -74,6 +81,23 @@ function draw_player()
 	end
 	-- thruster ?
 end
+
+function draw_asteroid(x,y,r)
+ -- shitty placeholder
+ circfill(x,y,r,8)
+end
+
+function draw_text()
+	print("score: "..score, 3,5)
+	print("life : "..life, 3,11)
+	if(isdebug == 1) then
+		print(debug, 3,110,8)
+ end
+ debug = ""
+end
+
+-->8
+-- gameplay stuff
 
 -- update player vel/rot/pos/...
 function update_player()
@@ -95,19 +119,6 @@ function update_player()
 	if(py<0) then py += 127 end	
 end
 
-function draw_asteroid(x,y,r)
- -- shitty placeholder
- circfill(x,y,r,8)
-end
-
-function draw_text()
-	print("score: "..score, 3,5)
-	print("life : "..life, 3,11)
-	if(isdebug == 1) then
-		print(debug, 3,110,8)
- end
- debug = ""
-end
 
 function turn_left()
 	debug="left "..pangle
