@@ -5,8 +5,9 @@ isdebug=1
 px, py = 64, 64
 pvx, pvy = 0,0
 paccel= 0.05
-pdecel = 0.02
+pdecel = 0.03
 pangle = 0.0
+pmaxspeed = 3
 pgeom={
 {{0,-1},{-1,1}},
 {{-1,1},{1,1}},
@@ -60,8 +61,10 @@ function update_player()
 	pvy -= pdecel
 	if (pvx < 0) then pvx = 0 end
 	if (pvy < 0) then pvy = 0 end
- px += pvx
- py += pvy
+	if (pvx > pmaxspeed) then pvx = pmaxspeed end
+	if (pvy > pmaxspeed) then pvy = pmaxspeed end
+ px += pvx * cos(pangle+0.25)
+ py += pvy * sin(pangle+0.25)
 end
 
 function draw_text()
