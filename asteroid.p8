@@ -51,13 +51,7 @@ function _draw()
 	draw_text()
 end
 
--- draw the player, duh.
 function draw_player()
-	--hitbox
-	if(isdebug==1) then
-		rect(px-psize,py-psize,
-					 px+psize,py+psize,2)
-	end
 	--spaceship
 	for p in all(pgeom) do
 		line(
@@ -68,6 +62,7 @@ function draw_player()
 			7
 		)
 	end
+	-- thruster ?
 end
 
 -- update player vel/rot/pos/...
@@ -114,8 +109,6 @@ function accel()
  paccelangle = pangle
  pvx = pvx + paccel * cos(paccelangle+0.25)
  pvy = pvy + paccel * sin(paccelangle+0.25) 
--- px += pvx * cos(pangle+0.25)
--- py += pvy * sin(pangle+0.25)
  debug="accel "..pvx.."/"..pvy
  sfx(1)
 end
