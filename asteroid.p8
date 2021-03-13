@@ -2,7 +2,7 @@ pico-8 cartridge // http://www.pico-8.com
 version 32
 __lua__
 -- non gameplay stuff
-isdebug=1
+isdebug=1 -- 1 to enable
 debug = ""
 
 -- const
@@ -10,7 +10,7 @@ pmaxspeed = 3
 psize = 4
 rotspeed=0.02
 paccel, pdecel = 0.05, 0.03
-
+paccelangle = 0 
 -- world
 score, life = 0, 3
 
@@ -54,8 +54,10 @@ end
 -- draw the player, duh.
 function draw_player()
 	--hitbox
-	rect(px-psize,py-psize,
+	if(isdebug==1) then
+		rect(px-psize,py-psize,
 					 px+psize,py+psize,2)
+	end
 	--spaceship
 	for p in all(pgeom) do
 		line(
@@ -76,8 +78,8 @@ function update_player()
 	if (pvy < 0) then pvy = 0 end
 	if (pvx > pmaxspeed) then pvx = pmaxspeed end
 	if (pvy > pmaxspeed) then pvy = pmaxspeed end
-	px += pvx * cos(pangle+0.25)
-	py += pvy * sin(pangle+0.25)
+	px += pvx * cos(paccelangle+0.25)
+	py += pvy * sin(paccelangle+0.25)
 	if(px>127) then px -= 127 end
 	if(py>128) then py -= 127 end
 	if(px<0) then px += 127 end
@@ -91,6 +93,7 @@ function draw_text()
 	if(isdebug == 1) then
 		print("debug: "..debug, 3,110,8)
  end
+ debug = ""
 end
 
 function turn_left()
@@ -104,6 +107,7 @@ function turn_right()
 end
 
 function accel()
+ paccelangle = pangle
  pvx += paccel
  pvy += paccel
 -- px += pvx * cos(pangle+0.25)
