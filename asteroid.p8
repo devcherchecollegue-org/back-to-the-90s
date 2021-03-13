@@ -4,6 +4,8 @@ __lua__
 isdebug=1
 px, py = 64, 64
 pvx, pvy = 0,0
+paccel= 0.05
+pdecel = 0.02
 pangle = 0.0
 pgeom={
 {{0,-1},{-1,1}},
@@ -29,6 +31,7 @@ function _update()
 	if(btn(➡️)) then turn_right() end
 	if(btn(⬆️)) then accel() end
 	if(btn(❎)) then fire() end
+	update_player()
 end
 
 function _draw()
@@ -52,6 +55,15 @@ function draw_player()
 	end
 end
 
+function update_player()
+	pvx -= pdecel
+	pvy -= pdecel
+	if (pvx < 0) then pvx = 0 end
+	if (pvy < 0) then pvy = 0 end
+ px += pvx
+ py += pvy
+end
+
 function draw_text()
 	print("score: "..score, 3,5)
 	print("life : "..life, 3,11)
@@ -71,7 +83,9 @@ function turn_right()
 end
 
 function accel()
- debug="accel"
+ pvx += paccel
+ pvy += paccel
+ debug="accel "..pvx.."/"..pvy
 end
 
 function fire()
