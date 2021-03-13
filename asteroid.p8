@@ -45,15 +45,16 @@ function _update()
 	if(btn(⬆️)) then accel() end
 	if(btnp(❎)) then fire() end
 	update_player()
+
 	
 	-- spawn asteroid
-	local x = rnd(110) + 10
-	local y = rnd(110) + 10
-	while((abs(x-px) < 30) and (abs(y-py) < 30)) do
-		x = rnd(110) + 10
-		y = rnd(110) + 10
-	end
-	draw_asteroid(x,y,3)
+--	local x = rnd(110) + 10
+--	local y = rnd(110) + 10
+--	while((abs(x-px) < 30) and (abs(y-py) < 30)) do
+--		x = rnd(110) + 10
+--		y = rnd(110) + 10
+--	end
+--	draw_asteroid(x,y,3)
 end
 
 -- called at 30fps
