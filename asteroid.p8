@@ -9,14 +9,14 @@ debug = ""
 pmaxspeed = 3
 psize = 4
 rotspeed=0.02
-paccel, pdecel = 0.05, 0.03
+paccel, pdecel = 0.05, 0.99
 -- world
 score, life = 0, 3
 
 -- player position, velocity, angle
 px, py = 64, 64
 pvx, pvy = 0,0
-pangle = 0.0
+pangle = 0
 paccelangle = 0 
 
 -- player triangle geom
@@ -41,7 +41,7 @@ function _update()
 	if(btn(⬅️)) then turn_left() end
 	if(btn(➡️)) then turn_right() end
 	if(btn(⬆️)) then accel() end
-	if(btn(❎)) then fire() end
+	if(btnp(❎)) then fire() end
 	update_player()
 end
 
@@ -73,8 +73,8 @@ end
 -- update player vel/rot/pos/...
 function update_player()
 	-- decelerate
- pvx *= 0.99
- pvy *= 0.99
+ pvx *= pdecel
+ pvy *= pdecel
  -- cap max speed
 	if (pvx < -pmaxspeed) then pvx = -pmaxspeed end
 	if (pvy < -pmaxspeed) then pvy = -pmaxspeed end
@@ -95,7 +95,7 @@ function draw_text()
 	print("score: "..score, 3,5)
 	print("life : "..life, 3,11)
 	if(isdebug == 1) then
-		print("debug: "..debug, 3,110,8)
+		print(debug, 3,110,8)
  end
  debug = ""
 end
@@ -121,6 +121,7 @@ end
 
 function fire()
  debug="fire"
+ sfx(0)
 end
 
 __gfx__
@@ -130,3 +131,5 @@ __gfx__
 00077000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00077000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00700700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+__sfx__
+00010000310502a05025050153500c3500a35003350013500030008300043000130000300003000030000300090000c0000000000000000000000000000000000000000000000000000000000000000000000000
