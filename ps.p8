@@ -9,10 +9,10 @@ __lua__
 -- 5: increment use for the lifespan
 function new_particle(position, size, incr) 
  local particle = {
-  {31+rnd(62),31+rnd(62)},
+  {54+rnd(20),54+rnd(20)},
   {(rnd(100) - 50)/100,(rnd(100)-50)/100},
   {0.01-(rnd(100)/100),0.01-(rnd(100)/100)},
-  rnd(100),
+  rnd(30),
   incr
  }
 
@@ -67,7 +67,7 @@ function ps_update(ps)
   for i = 1,ps[2] + 1,1
   do
    if(is_empty(ps[3][i]) or part_dead(ps[3][i])) then
-    ps[3][i] = new_particle(ps[1],6,0.04)
+    ps[3][i] = new_particle(ps[1],6,0.4)
    end
   part_update(ps[3][i])
   end
