@@ -12,7 +12,7 @@ function new_particle(position, size, incr)
   {54+rnd(20),54+rnd(20)},
   {(rnd(100) - 50)/100,(rnd(100)-50)/100},
   {0.01-(rnd(100)/100),0.01-(rnd(100)/100)},
-  rnd(30),
+  rnd(40),
   incr
  }
 
