@@ -10,9 +10,9 @@ __lua__
 function new_particle(position, size, incr) 
  local particle = {
   {31+rnd(62),31+rnd(62)},
-  {rnd(100)/100,rnd(100)/100},
+  {(rnd(100) - 50)/100,(rnd(100)-50)/100},
   {0.01-(rnd(100)/100),0.01-(rnd(100)/100)},
-  size,
+  rnd(100),
   incr
  }
 
@@ -20,17 +20,29 @@ function new_particle(position, size, incr)
 end
 
 function part_update(part)
-	part[2][1] = part[2][1] + part[3][1]
-	part[2][2] = part[2][2] + part[3][2]
+--	part[2][1] = part[2][1] + part[3][1]
+--	part[2][2] = part[2][2] + part[3][2]
 	part[1][1] = part[1][1] + part[2][1]
 	part[1][2] = part[1][2] + part[2][2]
-    part[4] -= part[5]
+ part[4] -= part[5]
+ if(part[1][1] > 127) then 
+ 	part[1][1] -= 127
+ end
+ if(part[1][2] > 127) then 
+ 	part[1][2] -= 127
+ end
+ if(part[1][1] < 0) then 
+ 	part[1][1] += 127
+ end
+ if(part[1][2] < 0) then 
+ 	part[1][2] += 127
+ end
+ 
 end
 
 
 function part_draw(part)
- cls()
- circfill(part[1][1],part[1][2],part[4],6)
+ pset(part[1][1],part[1][2],6)
 end
 
 
@@ -80,10 +92,11 @@ end
 -- game loop
 local ps = {}
 function _init()
- ps = new_ps({61,61},100)
+ ps = new_ps({61,61},1000)
 end
 
 function _draw()
+	cls()
     ps_draw(ps)
 end
 
