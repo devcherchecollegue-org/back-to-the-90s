@@ -41,7 +41,6 @@ end
 
 -- called every time
 function _update()
-	cls()
  -- player collision
  			-- kill if hit by asteroid
  			
@@ -59,6 +58,7 @@ end
 
 -- called at 30fps
 function _draw()
+	cls()
 	draw_player()
 	draw_asteroid()
 	draw_text()
