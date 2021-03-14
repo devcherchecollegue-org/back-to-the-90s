@@ -98,6 +98,8 @@ end
 function _draw()
 	cls()
     ps_draw(ps)
+    print("mem:"..stat(0).."kb",10,10,8)
+--    print("fps:"..stat(7),10,16,8)
 end
 
 function _update()
