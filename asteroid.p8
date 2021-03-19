@@ -51,9 +51,11 @@ function _update()
 	if(btnp(❎)) then fire() end
 	update_player()
 
+	-- asteroid update
  if(roid_nb < 10) then
  	spawn_asteroid()
  end	
+ update_roid()
 end
 
 -- called at 30fps
@@ -153,10 +155,22 @@ function spawn_asteroid()
 		x = rnd(110) + 10
 		y = rnd(110) + 10
 	end
-	add(roid, {x,y,0,0})
+	add(roid, {x,y,rnd(2)-1,rnd(2)-1})
 	roid_nb += 1
 end
 
+function update_roid()
+	for r in all(roid) do
+		r[1] += r[3]
+		r[2] += r[4]
+			-- infinite screen
+		if(r[1]>127) then r[1] -= 127 end
+		if(r[2]>128) then r[2] -= 127 end
+		if(r[1]<0) then r[1] += 127 end
+		if(r[2]<0) then r[2] += 127 end	
+
+	end
+end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
